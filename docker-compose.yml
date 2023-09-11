@@ -1,0 +1,23 @@
+version: '3'
+services:
+  app:
+    build: app
+    environment:
+      - NODE_ENV=production
+      - PGHOST=db
+    volumes:
+      - ./app/var/log/:/usr/app/var/log
+    ports:
+      - 8080:3000
+    depends_on:
+      - db
+    restart: on-failure
+
+  db:
+    image: postgres:12
+    env_file:
+      - .env
+    volumes:
+      - ./db_init/:/docker-entrypoint-initdb.d/
+    ports:
+      - 5432:5432
