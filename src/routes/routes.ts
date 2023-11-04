@@ -6,8 +6,12 @@ function routes(app: Application) {
         PostController.get(req, res);
     })
 
-    app.post('/post', (req: Express.Request, res: Express.Response) => {
-        PostController.insert(req, res);
+    app.post('/post', (req: Express.Request, res: Express.Response, next) => {
+        try {
+            PostController.insert(req, res);            
+        } catch (error) {
+           console.error(error)
+        }
     });
 }
 
