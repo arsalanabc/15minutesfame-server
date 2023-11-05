@@ -4,7 +4,8 @@
   "description": "simple node app that runs on a container",
   "main": "server.js",
   "scripts": {
-    "start": "tsc && node dist/server.js"
+    "start": "tsc && node dist/server.js",
+    "dev": "nodemon server.ts"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +18,7 @@
     "@types/node": "^20.6.0",
     "@types/pg": "^8.10.2",
     "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   },
   "dependencies": {
