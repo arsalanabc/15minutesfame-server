@@ -1,12 +1,12 @@
 import client from "../db";
 import * as log from 'log4js'
-import { UserType } from "../types/types";
+import { UserRequestType, UserType } from "../types/types";
 
 const errorsLogger = log.getLogger('errors');
 const logger = log.getLogger('UserModel');
 
 const UserModel = {
-    insert: async (user:UserType): Promise<boolean> => {
+    insert: async (user:UserRequestType): Promise<boolean> => {
         
         if(user == null ) {
             throw new Error('missing argument');
@@ -28,7 +28,7 @@ const UserModel = {
             });
     },
 
-    getByEmail: async (email:string) => {
+    getByEmail: async (email:string): Promise<UserType[]> => {
 
         const query = 'SELECT * FROM "author" WHERE email = $1';
         const values = [email];
@@ -37,12 +37,7 @@ const UserModel = {
 
             logger.info(`Executing: ${query}`);
 
-            if (result.rows.length === 0) {
-                throw new Error('User not found');
-            }
-        
-            logger.info(`User found for: ${email}`);
-            return result.rows[0];
+            return result.rows
 
         } catch (error) {
             errorsLogger.fatal(error);

@@ -11,8 +11,7 @@ class PostService {
     async savePost(post: PostType){
         return await PostModel.insert(post);
     }
-    
-    
+        
 }
 
 export default new PostService();

@@ -1,8 +1,7 @@
 import { Application } from 'express-serve-static-core';
 import PostController from '../controllers/PostController';
-import UserController from '../controllers/UserController';
-import { Request, Response } from "express";
 import UserRoutes from './UserRoutes';
+import PostRequestController from '../controllers/PostRequestController';
 
 export type UserRequest = Express.Request & {
     params: {email: string}
@@ -20,6 +19,10 @@ function routes(app: Application) {
            console.error(error)
         }
     });
+
+    app.post('/post-request', PostRequestController.request);
+    app.get('/post-request', PostRequestController.get);
+    app.get('/post-request/:uniqueCode', PostRequestController.getByCode);
 
     UserRoutes(app)
 }

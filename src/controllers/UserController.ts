@@ -1,7 +1,7 @@
 import { UserRequest } from "../routes/routes";
 import { Response, Request } from "express";
 import UserService from "../services/UserService";
-import {UserType } from "../types/types";
+import {UserRequestType } from "../types/types";
 import * as log from 'log4js'
 
 const logger = log.getLogger('UserController');
@@ -16,7 +16,6 @@ const UserController = {
         logger.info("Requested User: ", req.params.email)
         try {
             const user = await UserService.findUser(req.params.email)
-
             if(user) response.send(user)
         } catch (e) {
             const error = (e as Error)
@@ -25,7 +24,7 @@ const UserController = {
     },
    
     insert: async (req: Request, response: any, next: Function) => {
-        const user: UserType = req.body;
+        const user: UserRequestType = req.body;
     
         try {
             const data = await UserService.createUser(user);
