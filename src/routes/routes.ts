@@ -2,6 +2,7 @@ import { Application } from 'express-serve-static-core';
 import PostController from '../controllers/PostController';
 import UserController from '../controllers/UserController';
 import { Request, Response } from "express";
+import UserRoutes from './UserRoutes';
 
 export type UserRequest = Express.Request & {
     params: {email: string}
@@ -14,14 +15,13 @@ function routes(app: Application) {
 
     app.post('/post', (req: Express.Request, res: Express.Response, next) => {
         try {
-            PostController.insert(req, res);            
+            PostController.create(req, res);            
         } catch (error) {
            console.error(error)
         }
     });
 
-    app.get('/user/:email', UserController.get)
-    app.post('/user/', UserController.insert)
+    UserRoutes(app)
 }
 
 export default routes
