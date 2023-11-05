@@ -20,13 +20,8 @@ function routes(app: Application) {
         }
     });
 
-    app.get('/user/:email', (req: UserRequest, res: Response) => {
-        UserController.get(req, res);
-    })
-
-    app.post('/user/', (req: Request, res: Response) => {
-        UserController.insert(req, res);
-    })
+    app.get('/user/:email', UserController.get)
+    app.post('/user/', UserController.insert)
 }
 
 export default routes

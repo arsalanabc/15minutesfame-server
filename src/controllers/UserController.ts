@@ -8,22 +8,23 @@ const logger = log.getLogger('UserController');
 
 
 const UserController = {
-    get: async (req: UserRequest, response: Response) => {
-
+    get: async (req: UserRequest, response: Response, next: Function) => {
         if(!req.params || !req.params.email) {
             response.send(new Error("invalid request"))
         }
+        
+        logger.info("Requested User: ", req.params.email)
         try {
             const user = await UserService.findUser(req.params.email)
 
-            if(user) response.send("user")
+            if(user) response.send(user)
         } catch (e) {
             const error = (e as Error)
             response.status(404).send(error.message)
         }
     },
    
-    insert: async (req: Request, response: any) => {
+    insert: async (req: Request, response: any, next: Function) => {
         const user: UserType = req.body;
     
         try {
