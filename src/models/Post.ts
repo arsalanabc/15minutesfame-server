@@ -12,7 +12,7 @@ const PostModel = {
             throw new Error('missing argument');
         };
 
-        const query = 'INSERT INTO posts (link) VALUES ($1)';
+        const query = 'INSERT INTO post (link) VALUES ($1)';
         logger.info(`Executing: ${query}`);
 
         return await client.query(
@@ -29,7 +29,7 @@ const PostModel = {
     },
 
     get: async () => {
-        const query = 'select * from posts';
+        const query = 'select * from post';
         logger.info(`Executing: ${query}`);
         return await client.query(query)
             .then(res => {
