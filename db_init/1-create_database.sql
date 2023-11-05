@@ -1,1 +1,1 @@
-CREATE DATABASE '15minutesoffame';
+CREATE DATABASE db_15minutesoffame;
