@@ -11,15 +11,17 @@ const PostController = {
 
     },
    
-    create: (req: any, response: any) => {
+    create: async (req: any, response: any) => {
         const post: PostType = req.body;
-        PostService.savePost(post).then(data => {
-            if(data){
-                response.send(data)
-            } else {
-                response.status('400')
+
+        try {
+            const data = await PostService.savePost(post);
+            if(data) response.status(200).send(data)
+
+        } catch(e){
+                const error = (e as Error)
+                response.status(500).send(error.message)
             }
-        });
     },
 }
 

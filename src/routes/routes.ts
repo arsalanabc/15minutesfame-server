@@ -8,17 +8,9 @@ export type UserRequest = Express.Request & {
 }
 
 function routes(app: Application) {
-    app.get('/post', (req: Express.Request, res: Express.Response) => {
-        PostController.get(req, res);
-    })
+    app.get('/post/:postId', PostController.get)
 
-    app.post('/post', (req: Express.Request, res: Express.Response, next) => {
-        try {
-            PostController.create(req, res);            
-        } catch (error) {
-           console.error(error)
-        }
-    });
+    app.post('/post', PostController.create);
 
     app.post('/post-request', PostRequestController.request);
     app.get('/post-request', PostRequestController.get);

@@ -7,3 +7,5 @@ CREATE TABLE post (
     updated_at TIMESTAMP DEFAULT NOW(),
     FOREIGN KEY (user_id) REFERENCES "author"(id)
 );
+
+       

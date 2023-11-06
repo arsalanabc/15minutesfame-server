@@ -1,6 +1,6 @@
 import client from "../db";
 import * as log from 'log4js'
-import { PostReqestType } from "../types/types";
+import { PostReqestType, PostRequestModelType } from "../types/types";
 
 const errorsLogger = log.getLogger('errors');
 const logger = log.getLogger('PostModel');
@@ -42,7 +42,7 @@ const PostRequest = {
             });
         },
 
-    getByUniqueCode: async (code:string) => {
+    getByUniqueCode: async (code:string) : Promise<PostRequestModelType[]> => {
         const query = 'SELECT * FROM "post_request" WHERE unique_code = $1';
 
         logger.info(`Executing: ${query}`);
@@ -56,6 +56,14 @@ const PostRequest = {
                 throw e;
             });
         },
+
+    async updateRequestStatus(requestId: number, isSubmitted: boolean ): Promise<void> {
+    
+            const query = 'UPDATE "post_request" SET is_submitted = $1 WHERE id = $2';
+            const values = [isSubmitted, requestId];
+            await client.query(query, values);
+       
+    }
 }
 
 export default PostRequest;

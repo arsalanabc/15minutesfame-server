@@ -1,0 +1,4 @@
+CREATE TABLE post_type (
+    id SERIAL PRIMARY KEY,
+    post_type VARCHAR(21) UNIQUE NOT NULL
+);

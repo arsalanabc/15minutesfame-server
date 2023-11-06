@@ -35,10 +35,9 @@ const PostRequestController = {
    
     request: async (req: any, response: any, next: Function) => {
         const postRequest: UserRequestType = req.body;
-
         try {
             const data = await PostRequestService.createAPostRequest(postRequest.email)
-            response.send(data)
+            response.status(200).send(data)
         } catch (e) {
             const error = (e as Error)
             response.status(500).send(error.message)

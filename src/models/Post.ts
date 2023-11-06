@@ -1,12 +1,12 @@
 import client from "../db";
 import * as log from 'log4js'
-import { PostType } from "../types/types";
+import { PostSaveType } from "../types/types";
 
 const errorsLogger = log.getLogger('errors');
 const logger = log.getLogger('PostModel');
 
 const PostModel = {
-    insert: async (post:PostType): Promise<boolean> => {
+    insert: async (post:PostSaveType): Promise<boolean> => {
         
         if(post == null ) {
             throw new Error('missing argument');

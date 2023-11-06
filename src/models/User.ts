@@ -44,6 +44,27 @@ const UserModel = {
             throw error;
             }
         },
+
+    getById: async (id:string): Promise<UserType[]> => {
+       return UserModel.get("id", id)
+    },
+    
+    get: async (key:string, value:string): Promise<UserType[]> => {
+
+        const query = `SELECT * FROM "author" WHERE ${key} = $1`;
+        const values = [value];
+        try {
+            const result = await client.query(query, values);
+
+            logger.info(`Executing: ${query}`);
+
+            return result.rows
+
+        } catch (error) {
+            errorsLogger.fatal(error);
+            throw error;
+            }
+        },
 }
 
 export default UserModel;
