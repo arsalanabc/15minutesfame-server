@@ -29,7 +29,23 @@ class PostRequestService {
     async updateRequestStatus(id: number, status: boolean) {
        await PostRequest.updateRequestStatus(id, status);
     }
+
+    validateRequest(postRequest:PostRequestModelType){
+        
+        const {expires_at, is_submitted} = postRequest;
+
+        if(this.isExpired(expires_at.toDateString())){
+            throw new Error("Request is expired")
+        }
+
+        if(is_submitted){
+            throw new Error("Request is already submitted!")
+        }
+    }
     
+    private isExpired(expiresAt: string){    
+        return new Date() < new Date(expiresAt);
+    }
 }
 
 export default new PostRequestService();

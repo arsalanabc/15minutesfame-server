@@ -24,27 +24,17 @@ class PostService {
             throw new Error("No request found!")
         }
 
-        const {user_id, expires_at, is_submitted} = postRequest[0];
-
-        if(this.isExpired(expires_at.toDateString())){
-            throw new Error("Request is expired")
-        }
-
-        if(is_submitted){
-            throw new Error("Request is already submitted!")
-        }
-
-
+        PostRequestService.validateRequest(postRequest[0]);    
+        
+        const {user_id, id} = postRequest[0];
         const user = await UserModel.getById(user_id.toString());
         const postTypeModel = await PostTypeModel.getByType(postType);
-
-        const { id } = postTypeModel[0]
 
         if(user.length === 0) {
             throw new Error("User not found!")
         }
 
-        await PostRequestService.updateRequestStatus(postRequest[0].id, true)
+        await PostRequestService.updateRequestStatus(id, true)
             
         return await PostModel.insert(
             {
@@ -55,10 +45,6 @@ class PostService {
                 link
             });
 
-    }
-    
-    isExpired(expiresAt: string){    
-        return new Date() < new Date(expiresAt);
     }
 }
 

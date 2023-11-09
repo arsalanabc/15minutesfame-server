@@ -1,6 +1,5 @@
 import PostRequestService from "../services/PostRequestService";
-import PostService from "../services/PostService";
-import { PostReqestType, PostResquestRequest, PostType, UserRequestType } from "../types/types";
+import { PostResquestRequest, UserRequestType } from "../types/types";
 import * as log from 'log4js'
 
 const logger = log.getLogger('PostController');
@@ -18,7 +17,9 @@ const PostRequestController = {
         }
 
         try {
-            const postRequest = await PostRequestService.getByUniqueCode(req.params.uniqueCode)      
+            const postRequest = await PostRequestService.getByUniqueCode(req.params.uniqueCode)  
+            
+            PostRequestService.validateRequest(postRequest[0]);    
             
             if(postRequest.length === 0) {
                 response.status(404).send("No Post Request found")
