@@ -34,7 +34,7 @@ class PostRequestService {
         
         const {expires_at, is_submitted} = postRequest;
 
-        if(this.isExpired(expires_at.toDateString())){
+        if(this.isExpired(expires_at)){
             throw new Error("Request is expired")
         }
 
@@ -43,8 +43,9 @@ class PostRequestService {
         }
     }
     
-    private isExpired(expiresAt: string){    
-        return new Date() < new Date(expiresAt);
+    private isExpired(expiresAt: Date){    
+        const now  = new Date()
+        return now > expiresAt ;
     }
 }
 
