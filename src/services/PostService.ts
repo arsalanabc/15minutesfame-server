@@ -40,7 +40,7 @@ class PostService {
             {
                 user_id, 
                 unique_code: uniqueCode, 
-                post_type_id: id,
+                post_type_id: postTypeModel[0].id,
                 title: "",
                 link
             });
