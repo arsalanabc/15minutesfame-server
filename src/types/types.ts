@@ -52,3 +52,9 @@ export type UserType = {
     email: string,
     created_at: Date
 }
+
+export type QueueModelType = {
+    id: number,
+    post_id: string,
+    updated_at: Date
+}

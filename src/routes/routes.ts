@@ -8,8 +8,8 @@ export type UserRequest = Express.Request & {
 }
 
 function routes(app: Application) {
+    app.get('/post/current', PostController.getCurrentPost)
     app.get('/post/:postId', PostController.get)
-
     app.post('/post', PostController.create);
 
     app.post('/post-request', PostRequestController.request);

@@ -11,6 +11,10 @@ class PostService {
         return await PostModel.get();
     }
 
+    async getById(id: string){
+        return await PostModel.getById(id);
+    }
+
     async savePost(post: PostType){
         if(post.uniqueCode == "" || post.link == "" ) {
             throw new Error("Invalid data type")
@@ -25,7 +29,6 @@ class PostService {
         }
 
         PostRequestService.validateRequest(postRequest[0]);    
-        
         const {user_id, id} = postRequest[0];
         const user = await UserModel.getById(user_id.toString());
         const postTypeModel = await PostTypeModel.getByType(postType);
@@ -34,17 +37,23 @@ class PostService {
             throw new Error("User not found!")
         }
 
-        await PostRequestService.updateRequestStatus(id, true)
-            
-        return await PostModel.insert(
-            {
-                user_id, 
-                unique_code: uniqueCode, 
-                post_type_id: postTypeModel[0].id,
-                title: "",
-                link
-            });
+        try {
+            const postSaved = await PostModel.insert(
+                {
+                    user_id: user_id, 
+                    unique_code: uniqueCode, 
+                    post_type_id: postTypeModel[0].id,
+                    title: "",
+                    link
+                });
 
+        if(postSaved) await PostRequestService.updateRequestStatus(id, true)  
+        
+        return postSaved
+
+        } catch (error) {
+            throw error;
+        }
     }
 }
 

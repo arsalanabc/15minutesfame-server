@@ -18,7 +18,6 @@ const PostRequestController = {
 
         try {
             const postRequest = await PostRequestService.getByUniqueCode(req.params.uniqueCode)  
-            
             PostRequestService.validateRequest(postRequest[0]);    
             
             if(postRequest.length === 0) {
