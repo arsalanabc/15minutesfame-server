@@ -1,5 +1,6 @@
 import { CronJob } from 'cron';
 
+// this should update the queue with the new post
 export const refreshCurrentPost = new CronJob(
 	'*/15 * * * *', // cronTime
 	function () {

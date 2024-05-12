@@ -5,4 +5,3 @@ dist/
 .eslintcache
 var/*/
 pgdata/*
-road map

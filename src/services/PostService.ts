@@ -1,8 +1,11 @@
 import PostModel from "../models/Post";
 import PostTypeModel from "../models/PostType";
 import UserModel from "../models/User";
-import { PostType } from "../types/types";
+import { PostModelType, PostType, QueueModelType } from "../types/types";
+import CacheService, { CachePost } from "./CacheService";
 import PostRequestService from "./PostRequestService";
+import QueueService from "./QueueService";
+
 
 class PostService {
     constructor() {}
@@ -13,6 +16,21 @@ class PostService {
 
     async getById(id: string){
         return await PostModel.getById(id);
+    }
+
+    async getQueuedPost(){
+        const cachedPost: CachePost<PostModelType> | undefined = CacheService.get()
+        if(cachedPost){
+            return cachedPost.value;
+        }
+
+        const queueItem :QueueModelType = await QueueService.get();
+
+        const post  = await this.getById(queueItem.post_id);
+
+        CacheService.set(post, queueItem.expiring_time  )
+
+        return post;
     }
 
     async savePost(post: PostType){
@@ -55,6 +73,7 @@ class PostService {
             throw error;
         }
     }
+    
 }
 
 export default new PostService();

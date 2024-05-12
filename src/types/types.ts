@@ -56,5 +56,6 @@ export type UserType = {
 export type QueueModelType = {
     id: number,
     post_id: string,
+    expiring_time: Date,
     updated_at: Date
 }

@@ -6,7 +6,7 @@ const errorsLogger = log.getLogger('errors');
 const logger = log.getLogger('QueueModel');
 
 const QueueModel = {
-    get: async (): Promise<QueueModelType[]> => {
+    get: async (): Promise<QueueModelType> => {
 
         const query = `SELECT * FROM "queue"`;
         try {
@@ -14,7 +14,7 @@ const QueueModel = {
 
             logger.info(`Executing: ${query}`);
 
-            return result.rows
+            return result.rows[0]
 
         } catch (error) {
             errorsLogger.fatal(error);

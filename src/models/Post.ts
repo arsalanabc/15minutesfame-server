@@ -56,7 +56,7 @@ const PostModel = {
             });
         },
 
-    getById: async (id:string): Promise<PostModelType[]> => {
+    getById: async (id:string): Promise<PostModelType> => {
 
         const query = `SELECT * FROM "post" WHERE id = $1`;
         const values = [id];
@@ -65,7 +65,7 @@ const PostModel = {
 
             logger.info(`Executing: ${query}`);
 
-            return result.rows
+            return result.rows[0]
 
         } catch (error) {
             errorsLogger.fatal(error);

@@ -1,6 +1,5 @@
 import PostService from "../services/PostService";
-import QueueService from "../services/QueueService";
-import { PostType, QueueModelType } from "../types/types";
+import { PostType } from "../types/types";
 import * as log from 'log4js'
 
 const logger = log.getLogger('PostController');
@@ -27,12 +26,9 @@ const PostController = {
     getCurrentPost: async (req: any, response: any) => {
 
         try {
-            const queueItem :QueueModelType[] = await QueueService.get();
-
-            const currentPost  = await PostService.getById(queueItem[0].post_id);
-
-            if(currentPost.length !== 0) response.status(200).send(currentPost[0])
-            else response.status(404).send(currentPost[0])
+            const currentPost  = await PostService.getQueuedPost();
+            if(currentPost) response.status(200).send(currentPost)
+            else response.status(404).send(currentPost)
 
         } catch(e){
                 const error = (e as Error)

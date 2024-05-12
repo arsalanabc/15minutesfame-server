@@ -1,0 +1,15 @@
+Creating a post 
+
+1 as a user, when I click on submit a request, I am asked for my email address (done)
+2 as as user when I request a post, a request is saved in the db with unique code per request (done)
+3 an email is sent to the users with unique code to submit their post link ie www.15minutesoffame.com/SDF87SF8SD8F9 (ui and backend done but not email sending)
+4 check if the unique is expired,  create a expired link page (done)
+
+
+cache
+create a cache to fetch queued post (done)
+
+
+update queue every 15 minutes with expiry time
+ 
+
