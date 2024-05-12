@@ -55,7 +55,22 @@ const PostModel = {
                 throw e;
             });
         },
+    getNextPost: async (id:string): Promise<PostModelType> => {
+        const query = `SELECT * FROM "post" WHERE id > $1 AND is_allowed = true order by created_at ASC limit 1`;
+        const values = [id];
+        try {
+            const result = await client.query(query, values);
 
+            logger.info(`Executing: ${query}`);
+            if(result.rowCount <= 0){throw new Error("No next post found")}
+
+            return result.rows[0]
+
+        } catch (error) {
+            errorsLogger.fatal(error);
+            throw error;
+            }
+        },
     getById: async (id:string): Promise<PostModelType> => {
 
         const query = `SELECT * FROM "post" WHERE id = $1`;

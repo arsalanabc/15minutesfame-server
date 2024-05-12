@@ -21,6 +21,13 @@ const QueueModel = {
             throw error;
             }
         },
+        
+        udpate: async (queueItem: QueueModelType): Promise<void> => {
+            const {id, post_id, expiring_time, updated_at} = queueItem;
+            const query = 'UPDATE "queue" SET post_id = $1, expiring_time = $2, updated_at = $3 WHERE id = $4';
+            const values = [post_id, expiring_time, updated_at, id];
+            await client.query(query, values);
+        }
 }
 
 export default QueueModel;

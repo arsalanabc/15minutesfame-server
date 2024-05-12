@@ -24,6 +24,7 @@ class PostService {
             return cachedPost.value;
         }
 
+        // maybe use PostModel.currentPost
         const queueItem :QueueModelType = await QueueService.get();
 
         const post  = await this.getById(queueItem.post_id);
@@ -73,6 +74,10 @@ class PostService {
             throw error;
         }
     }
+    async getNextPost(postId: string){
+        return await PostModel.getNextPost(postId);
+    }
+
     
 }
 
